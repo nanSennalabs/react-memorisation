@@ -8,11 +8,12 @@
 
 ## Memoization ใน React
 
-Memoization สามารถนำมาใช้ได้หลายวิธีในการเพิ่มประสิทธิภาพการทำงานของ React สามารถบันทึกส่วนประกอบ React ไว้ได้เพื่อป้องกันการเรนเดอร์ส่วนประกอบที่ไม่จำเป็น ใน React ใช้ React.memo กับ useCallback
+Memoization สามารถนำมาใช้ได้หลายวิธีในการเพิ่มประสิทธิภาพการทำงานของ React สามารถบันทึกส่วนประกอบ React ไว้ได้เพื่อป้องกันการเรนเดอร์ส่วนประกอบที่ไม่จำเป็น ใน React ใช้ React.memo useMemo และ useCallback
 
 ## ทำไมต้อง Memorisation
 
-สำหรับ React ปัญหาการ Re-Render เป็นปัญหาใหญ่ ที่ทำให้เกิดการ Render ซ้ำๆ ซึ่งทุกการ Render จะเกิดการจอง Memory (Memory allocation) และบางทีการ Render Component ซ้ำ ๆ เกินความจำเป็นอาจจะทำให้เกิดการจัดสรรหน่วยความจำอย่างไม่ถูกต้อง (Memory Leak)
+สำหรับ React ปัญหาการ รี-เรนเดอร์ เป็นปัญหาใหญ่ ที่ทำให้เกิดการเรนเดอร์ซ้ำๆ ซึ่งทุกการเรนเดอร์จะเกิดการจอง Memory (Memory allocation) และบางทีการเรนเดอร์ Component ซ้ำ ๆ เกินความจำเป็นอาจจะทำให้เกิดการจัดสรรหน่วยความจำอย่างไม่ถูกต้อง (Memory Leak)
+
 
 ## ตัวอย่างเคสการนำ memo มาปรับใช้
 
@@ -44,11 +45,8 @@ function Counter() {
 }
 ```
 
-จากโค้ดตัวอย่างด้านบน ถ้าเรากด Click me จะทำให้ state มีการอัพเดตและ re-render ใหม่ทุกครั้ง แต่ props ที่ส่งไปที่ Display ไม่เปลี่ยน เพราะฉะนั้นจึงเกิดการ render ที่ไม่จำเป็น สิ่งที่นำมาจัดการปัญหาคือ React.memo()
+จากโค้ดตัวอย่างด้านบน ถ้าเรากด Click me จะทำให้ state มีการอัพเดตและ รี-เรนเดอร์ ใหม่ทุกครั้ง แต่ props ที่ส่งไปที่ Display ไม่เปลี่ยน เพราะฉะนั้นจึงเกิดการเรนเดอร์ที่ไม่จำเป็น สิ่งที่นำมาจัดการปัญหาคือ React.memo()
 
-### React.memo
-
-React.memo() เป็น Higher Order Component ซึ่งจะ render เฉพาะตอน Props เปลี่ยน
 
 ```
 const Display = React.memo(function Display({ name }: { name: string }) {
@@ -58,12 +56,81 @@ const Display = React.memo(function Display({ name }: { name: string }) {
 });
 ```
 
-เมื่อนำ React.memo เข้ามาใช้จะสามารถแก้ไขการ re-render ซ้ำ เพราะมันถูก memoized ไว้ ตราบใดที่ Props ยังไม่เปลี่ยน โดยจะ return ค่า เป็น new componet ทำงานเหมือนข้อมูลที่ถูก memoized ไว้ก่อนหน้า
-
+เมื่อนำ React.memo เข้ามาใช้จะสามารถแก้ไขการรี-เรนเดอร์ซ้ำ เพราะมันถูก memoized ไว้ ตราบใดที่ Props ยังไม่เปลี่ยน โดยจะ return ค่า เป็น new componet ทำงานเหมือนข้อมูลที่ถูก memoized ไว้ก่อนหน้า
 
 ## ตัวอย่างเคสการนำ useCallback มาปรับใช้
 
 ```
+import { useCallback, useState } from "react";
+
+export function HookSection() {
+  const [number, setNumber] = useState(0);
+  const [someValue, setSomeValue] = useState(0);
+  const [numberWithCallback, setNumberWithCallback] = useState<
+    number | undefined
+  >(undefined);
+
+  const getTimestamp = () => new Date().getTime();
+
+  const numberWithoutCallback = getTimestamp();
+
+  const getNumber = useCallback(() => {
+    setNumberWithCallback(() => getTimestamp());
+  }, [someValue]);
+
+  return (
+    <div className="text-white">
+      ทดลองเปลี่ยนค่า (Number): {number}
+      <br />
+      <div className="flex gap-x-[20px] py-[20px]">
+        <button
+          className="bg-secondary px-[16px] py-[8px] rounded-[8px] text-black w-[150px]"
+          onClick={() => {
+            setNumber((prev) => ++prev);
+          }}
+        >
+          เพิ่ม (+)
+        </button>
+        <button
+          className="bg-secondary px-[16px] py-[8px] rounded-[8px] text-black w-[150px]"
+          onClick={() => {
+            setNumber((prev) => --prev);
+          }}
+        >
+          ลด (-)
+        </button>
+      </div>
+      <hr />
+      <p className="pt-[10px]">ทดลองเปลี่ยนค่า (Some value): {someValue}</p>
+      <div className="flex gap-x-[20px] py-[20px]">
+        <button
+          className="bg-secondary px-[16px] py-[8px] rounded-[8px] text-black w-[150px]"
+          onClick={() => {
+            setSomeValue((prev) => ++prev);
+            getNumber();
+          }}
+        >
+          เพิ่ม (+)
+        </button>
+        <button
+          className="bg-secondary px-[16px] py-[8px] rounded-[8px] text-black w-[150px]"
+          onClick={() => {
+            setSomeValue((prev) => --prev);
+            getNumber();
+          }}
+        >
+          ลด (-)
+        </button>
+      </div>
+      <p className="py-[20px]">
+        ไม่ใช้ useCallback: {numberWithoutCallback}
+      </p>
+      <hr />
+      <p className="py-[20px]">ใช้ useCallback: {numberWithCallback}</p>
+      <hr />
+    </div>
+  );
+}
 
 ```
 
@@ -71,17 +138,21 @@ const Display = React.memo(function Display({ name }: { name: string }) {
 
 ### แบบไม่ใช้ useCallback
 
-- Timestamp แสดงครั้งแรกเมื่อมีการ Render
-- Timestamp แสดงอีกครั้งเมื่อมีการ Re-Render (Number หรือ Some Value เปลี่ยนแปลง)
-- เป็นตัวอย่างกรณีการ Re-Render เกินความจำเป็น
+- Timestamp แสดงครั้งแรกเมื่อมีการเรนเดอร์
+- Timestamp แสดงอีกครั้งเมื่อมีการรี-เรนเดอร์ (Number หรือ Some Value เปลี่ยนแปลง)
 
 ### แบบใช้ useCallback
 
-- Timestamp ไม่แสดงครั้งแรกเรียกเมื่อมีการ Render (จะแสดงเมื่อเราสั่ง Call ฟังก์ชันเอง)
+- Timestamp ไม่แสดงครั้งแรกเรียกเมื่อมีการเรนเดอร์ (จะแสดงเมื่อเราสั่ง Call ฟังก์ชันเอง)
 - Timestamp แสดงเมื่อสั่ง Call ฟังก์ชัน และ ค่าใน Some Value มีการเปลี่ยนแปลงเท่านั้น
-- เป็นตัวอย่างกรณีการ Re-Render เฉพาะที่จำเป็น
 
-หลักการของ useCallback คือการ Cache ฟังก์ชันไว้ ไม่ถูกเรียกเมื่อมีการ Render (จะถูกเรียกเมื่อเราสั่ง Call ฟังก์ชันเอง)หรือถูกเรียกอีกครั้งเมื่อสั่ง Call ฟังก์ชัน และ ค่าใน Array deps มีการเปลี่ยนแปลง และReturn ออกเป็น Function
+useCallback คือการ Cache ฟังก์ชันไว้ ไม่ถูกเรียกเมื่อมีการเรนเดอร์ (จะถูกเรียกเมื่อเราสั่ง Call ฟังก์ชันเอง)หรือถูกเรียกอีกครั้งเมื่อสั่ง Call ฟังก์ชัน และ ค่าใน Array deps มีการเปลี่ยนแปลง และReturn ออกเป็น Function
+
+
+
+## สรุป
+การนำ Memorisation มาปรับใช้กับโค้ด เป็นประโยชน์อย่างมากไม่ว่าจะเป็นเรื่องการลดการใช้หน่วยความจำหรือเพิ่มประสิทธิการทำงานของซอฟต์แวร์ ทั้งนี้ยังสามารถนำ React.memo() และ useCallback เข้ามาปรับใช้ในการแก้ไขปัญหาของการเรนเดอร์ที่ไม่จำเป็นซึ่งอาจทำให้เกิดปัญหาในอนาคต สามารถดูตัวอย่างการใช้งานของ useMemo ได้ที่ [useMemo](https://github.com/nanSennalabs/react-hooks-mini-example)
+
 
 ## แหล่งที่มา
 
