@@ -1,0 +1,8 @@
+<svg viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g id="HardDrives">
+    <path id="Vector (Stroke)" fill-rule="evenodd" clip-rule="evenodd" d="M2 10C2 9.44772 2.44772 9 3 9H13C13.5523 9 14 9.44772 14 10V13C14 13.5523 13.5523 14 13 14H3C2.44772 14 2 13.5523 2 13V10ZM13 10H3V13H13V10Z" fill="currentColor"/>
+    <path id="Vector (Stroke)_2" fill-rule="evenodd" clip-rule="evenodd" d="M2 4C2 3.44772 2.44772 3 3 3H13C13.5523 3 14 3.44772 14 4V7C14 7.55228 13.5523 8 13 8H3C2.44772 8 2 7.55228 2 7V4ZM13 4H3V7H13V4Z" fill="currentColor"/>
+    <path id="Vector" d="M11.25 6.25C11.6642 6.25 12 5.91421 12 5.5C12 5.08579 11.6642 4.75 11.25 4.75C10.8358 4.75 10.5 5.08579 10.5 5.5C10.5 5.91421 10.8358 6.25 11.25 6.25Z" fill="currentColor"/>
+    <path id="Vector_2" d="M11.25 12.25C11.6642 12.25 12 11.9142 12 11.5C12 11.0858 11.6642 10.75 11.25 10.75C10.8358 10.75 10.5 11.0858 10.5 11.5C10.5 11.9142 10.8358 12.25 11.25 12.25Z" fill="currentColor"/>
+  </g>
+</svg>
