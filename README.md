@@ -56,7 +56,7 @@ const Display = React.memo(function Display({ name }: { name: string }) {
 });
 ```
 
-เมื่อนำ React.memo เข้ามาใช้จะสามารถแก้ไขการรี-เรนเดอร์ซ้ำ เพราะมันถูก memoized ไว้ ตราบใดที่ Props ยังไม่เปลี่ยน โดยจะ return ค่า เป็น new componet ทำงานเหมือนข้อมูลที่ถูก memoized ไว้ก่อนหน้า
+เมื่อนำ React.memo() เข้ามาใช้ Display ถูกเรนเดอร์เพียงครั้งเดียว เพราะมันถูก memoized ไว้และตราบใดที่ Props ยังไม่เปลี่ยน React.memo() จะ return ค่า เป็น new componet ทำงานเหมือนข้อมูลที่ถูก memoized ไว้ก่อนหน้า
 
 ## ตัวอย่างเคสการนำ useCallback มาปรับใช้
 
