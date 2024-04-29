@@ -182,11 +182,11 @@ export function LazyPage() {
 ```
 
 ทำการ import component ที่ต้องการ render ด้วย lazy จากนั้น component ที่ถูก React.lazy จะถูกโหลด
-จาก bundle ของตัวมันเองโดยไม่ยุ่งกับ bundle หลักของ project ทำให้ load component ได้เร็วขึ้นและจะแสดงผลอัตโนมัติเมื่อ LazyComponent ทำการ render เสร็จแล้ว
+จาก bundle ของตัวมันเองโดยไม่ยุ่งกับ bundle หลักของ project ทำให้ load component ได้เร็วขึ้นและจะแสดงผลอัตโนมัติเมื่อ LazyComponent ทำการ render เสร็จแล้ว ถ้า component ยัง render ไม่เสร็จจะทำให้เกิดหน้าขาว
 
 ## Suspense
 
-ระหว่างที่รอให้ Lazy Component โหลดเสร็จสิ้น สามารใช้ Suspense เพื่อแสดง UI ในระหว่างที่ Component นั้น ๆ กำลังโหลด โดย Suspense component จะมี props ชื่อ fallback สามารถส่ง element บางอย่างเข้าไปเพื่อจะให้แสดงระหว่างที่รอ LazyComponent render เสร็จโดยตัวอย่างด้านบนตำแหน่งของ LazyComponent จะแสดงคำว่า Loading… จนกว่า LazyComponent จะทำการ render เสร็จนั้นเอง
+Suspense นำมาใช้ระหว่างที่รอให้ Lazy Component โหลดเสร็จสิ้น สามารใช้ Suspense เพื่อแสดง UI ในระหว่างที่ Component นั้น ๆ กำลังโหลด โดย Suspense component จะมี props ชื่อ fallback สามารถส่ง element บางอย่างเข้าไปเพื่อจะให้แสดงระหว่างที่รอ LazyComponent render เสร็จโดยตัวอย่างด้านบนตำแหน่งของ LazyComponent จะแสดงคำว่า Loading… จนกว่า LazyComponent จะทำการ render เสร็จนั้นเอง
 
 ## ข้อควรระวัง
 
