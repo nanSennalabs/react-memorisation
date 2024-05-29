@@ -151,7 +151,6 @@ useCallback คือการ Cache ฟังก์ชันไว้ ไม่
 ## สรุป
 การนำ Memorisation มาปรับใช้กับโค้ด เป็นประโยชน์อย่างมากไม่ว่าจะเป็นเรื่องการลดการใช้หน่วยความจำหรือเพิ่มประสิทธิการทำงานของซอฟต์แวร์ ปัญหาเรื่องการใช้ memmory เกินความจำเป็น ถ้าเราละเลยมันและปล่อยมันไว้แล้วซอฟต์แวร์เราใหญ่ขึ้น เมื่อถึงจุดนี้การที่ไปไล่หาสาเหตุในระบบก็จะทำให้เราใช้เวลาและทรัพยากรไปเป็นอย่างมาก ดังนั้นหากเราคำนึงถึงและคอยตรวจสอบอย่างสม่ำเสมอก็จะช่วยห้องกันปัญหานี้ได้ เราสามารถนำ React.memo() useCallback และ useMemo เข้ามาปรับใช้ในการแก้ไขปัญหาของการเรนเดอร์ที่ไม่จำเป็นที่อาจทำให้เกิดปัญหาในอนาคต สามารถดูตัวอย่างการใช้งานของ useMemo ได้ที่ [useMemo](https://github.com/nanSennalabs/react-hooks-mini-example)
 
-
 # Lazy load
 
 ## React.lazy คือ
@@ -213,6 +212,13 @@ function Editor() {
 }
 ```
 
+## สรุป
+lazy load ส่วนใหญ่จะนำมาใช้กับ project ที่มีขนาดใหญ่ กรณีที่ component ไม่ได้ซับซ้อนหรือแค่ส่ง props ไป render เท่านั้น ก็ไม่จำเป็นต้องทำ lazy load ก็ได้
+
+# Code splitting
+
+
+
 ## แหล่งที่มา
 
 ### Memorisation
@@ -220,3 +226,8 @@ function Editor() {
 - [What is Memoization in React? | Syncfusion Blogs](https://www.syncfusion.com/blogs/post/what-is-memoization-in-react)
 - [React.memo() คืออะไร?](https://www.devahoy.com/blog/2019/11/react-memo-in-function-component)
 - [การใช้งานและความแตกต่างระหว่าง useMemo และ useCallback ของ React Hooks](https://blog.2my.xyz/2021/08/14/react-hooks-usememo-usecallback/#%E0%B9%81%E0%B8%81%E0%B9%89%E0%B8%9B%E0%B8%B1%E0%B8%8D%E0%B8%AB%E0%B8%B2%E0%B8%94%E0%B9%89%E0%B8%A7%E0%B8%A2-usecallback)
+
+## Lazy load
+
+-[[ReactJS] การใช้งาน Lazy-loading และ Suspense - Pratya Yeekhaday - Mediumlazy – React](https://medium.com/@pratya.yeekhaday/reactjs-%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%83%E0%B8%8A%E0%B9%89%E0%B8%87%E0%B8%B2%E0%B8%99-lazy-loading-%E0%B9%81%E0%B8%A5%E0%B8%B0-suspense-6289db90ae17)
+-[lazy – React](https://react.dev/reference/react/lazy)
